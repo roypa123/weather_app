@@ -4,9 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/configs/constants/app_json.dart';
-import '../../../../core/configs/constants/string_constants.dart';
 import '../../../../core/configs/styles/app_colors.dart';
-import '../../../../core/configs/styles/fonts/dm_serif_display.dart';
+import '../../../../core/configs/styles/fonts/roboto.dart';
 import '../bloc/main_bloc.dart';
 
 class MainScreen extends StatelessWidget {
@@ -52,14 +51,14 @@ class MainScreen extends StatelessWidget {
                           size: 30.w,
                         ),
                         Text("India",
-                            style: DmSerifDisplayPalette.fWhite_24_400),
+                            style: RobotoPalette.fWhite_24_400),
                         Text("Date",
-                            style: DmSerifDisplayPalette.fWhite_18_400),
+                            style: RobotoPalette.fWhite_18_400),
                       ],
                     ),
                   ),
                   40.verticalSpace,
-                  Text("22", style: DmSerifDisplayPalette.fWhite_60_400),
+                  Text("22", style: RobotoPalette.fWhite_60_400),
                   25.verticalSpace,
                   Lottie.asset(AppJson.jsonThunder,
                       repeat: true,
@@ -82,16 +81,16 @@ class MainScreen extends StatelessWidget {
                               Expanded(
                                 flex: 5,
                                 child: Text("Humidity (%)",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               ),
                               Expanded(
                                 child: Text(" - ",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: Text("sa ",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               )
                             ],
                           ),
@@ -101,16 +100,16 @@ class MainScreen extends StatelessWidget {
                               Expanded(
                                 flex: 5,
                                 child: Text("Wind Speed (m/s)",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               ),
                               Expanded(
                                 child: Text(" - ",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: Text("sas",
-                                    style: DmSerifDisplayPalette.fWhite_18_400),
+                                    style: RobotoPalette.fWhite_18_400),
                               )
                             ],
                           ),

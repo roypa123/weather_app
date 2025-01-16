@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../app_colors.dart';
 
-class DmSerifDisplayPalette {
-  static const String dmSerifDisplayFamily = "DMSerifDisplay";
+class RobotoPalette {
+  static const String robotoFamily = "Roboto";
 
   /*<---15--->*/
   static TextStyle get fWhite_18_400 => TextStyle(
@@ -19,7 +19,6 @@ class DmSerifDisplayPalette {
 
   /*<---40--->*/
   static TextStyle get fWhite_60_400 => TextStyle(
-      height: 1,
       fontSize: 60.sp,
       fontWeight: FontWeight.w400,
       color: AppColors.white);

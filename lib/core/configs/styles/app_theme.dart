@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'fonts/dm_serif_display.dart';
+import 'fonts/roboto.dart';
 
 class AppTheme {
   static ThemeData get themeData => ThemeData(
       scaffoldBackgroundColor: Colors.black,
       highlightColor: Colors.white.withOpacity(.03),
       splashColor: Colors.white.withOpacity(.06),
-      fontFamily: DmSerifDisplayPalette.dmSerifDisplayFamily,
+      fontFamily: RobotoPalette.robotoFamily,
       useMaterial3: true,
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
