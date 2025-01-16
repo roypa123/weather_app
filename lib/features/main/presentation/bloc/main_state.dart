@@ -9,6 +9,13 @@ abstract class MainState extends Equatable {
 
 class MainInitial extends MainState {}
 
-class FlashlightOffState extends MainState {}
+class MainSuccess extends MainState {
+  const MainSuccess({this.name = "", this.humidity = "", this.windSpeed = "",this.temperature = ""});
+  final String name;
+  final String humidity;
+  final String windSpeed;
+  final String temperature;
 
-class FlashlightOnState extends MainState {}
+  @override
+  List<Object> get props => [name, humidity, windSpeed,temperature];
+}

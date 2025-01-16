@@ -57,16 +57,18 @@ class Clouds {
 
 class Main {
   double temp;
-
+  int pressure;
   int humidity;
 
   Main({
     required this.temp,
+    required this.pressure,
     required this.humidity,
   });
 
   factory Main.fromJson(Map<String, dynamic> json) => Main(
         temp: json["temp"]?.toDouble(),
+        pressure: json["pressure"],
         humidity: json["humidity"],
       );
 }
