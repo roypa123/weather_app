@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,6 +25,7 @@ class MainScreen extends StatelessWidget {
               actions: [
                 GestureDetector(
                   onTap: () {
+                    log("hello");
                     context.read<MainBloc>().add(
                           const GetDataEvent(
                             latitude: 10.0087996,

@@ -11,10 +11,11 @@ Future<void> _initNetworkServices() async {
   sl.registerLazySingleton<NetWorkBaseServices>(() => NetworkServices());
 }
 
-
-
 Future<void> _initMainBloc() async {
-  sl.registerFactory(
-    () => MainBloc(),
-  );
+  sl
+    ..registerFactory(
+      () => MainBloc(mainRepo: sl()),
+    )
+    ..registerLazySingleton<MainRepo>(
+        () => MainRepoImplements(networkBaseServices: sl()));
 }
