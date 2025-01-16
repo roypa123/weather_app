@@ -19,7 +19,7 @@ class WeatherApp extends StatelessWidget {
         title: AppConstants.appName,
         navigatorKey: navigatorKey,
         onGenerateRoute: RouteGenerator.generateRoute,
-        initialRoute: RouteConstants.routeInitial,
+        initialRoute: RouteConstants.routeMainScreen,
         theme: AppTheme.themeData,
         debugShowCheckedModeBanner: false,
         builder: (context, child) {

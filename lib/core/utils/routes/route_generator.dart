@@ -7,14 +7,6 @@ class RouteGenerator {
     RouteSettings settings,
   ) {
     switch (settings.name) {
-      case RouteConstants.routeInitial:
-        return _buildRoute(
-            RouteConstants.routeInitial,
-            BlocProvider<SplashBloc>(
-              create: (_) => sl<SplashBloc>()..add(StartSplash()),
-              child: const SplashScreen(),
-            ));
-
       case RouteConstants.routeMainScreen:
         return _buildRoute(
             RouteConstants.routeMainScreen,
