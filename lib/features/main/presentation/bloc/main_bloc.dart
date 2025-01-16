@@ -6,9 +6,9 @@ part 'main_state.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   MainBloc() : super(FlashlightOffState()) {
-    on<MainPowerButtonEvent>(_onPowerButtonEvent);
+    on<GetDataEvent>(_getDataEvent);
   }
 
-  Future<void> _onPowerButtonEvent(
-      MainPowerButtonEvent event, Emitter<MainState> emit) async {}
+  Future<void> _getDataEvent(
+      GetDataEvent event, Emitter<MainState> emit) async {}
 }

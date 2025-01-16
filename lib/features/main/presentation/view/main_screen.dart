@@ -13,114 +13,123 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const SizedBox(),
-        backgroundColor: AppColors.transparent,
-        actions: [
-          GestureDetector(
-            onTap: () {},
-            child: Icon(
-              Icons.replay,
-              color: AppColors.white,
-              size: 30.w,
-            ),
-          ),
-          25.horizontalSpace
-        ],
-      ),
-      backgroundColor: AppColors.black,
-      body: Container(
-        padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-        width: double.maxFinite,
-        height: double.maxFinite,
-        child: BlocConsumer<MainBloc, MainState>(
-            listener: (context, state) {},
-            builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.location_pin,
-                          color: AppColors.white,
-                          size: 30.w,
-                        ),
-                        Text("India",
-                            style: RobotoPalette.fWhite_24_400),
-                        Text("Date",
-                            style: RobotoPalette.fWhite_18_400),
-                      ],
-                    ),
+    return BlocConsumer<MainBloc, MainState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: const SizedBox(),
+              backgroundColor: AppColors.transparent,
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    context.read<MainBloc>().add(
+                          const GetDataEvent(
+                            latitude: 10.0087996,
+                            longitude: 76.3241211,
+                          ),
+                        );
+                  },
+                  child: Icon(
+                    Icons.replay,
+                    color: AppColors.white,
+                    size: 30.w,
                   ),
-                  40.verticalSpace,
-                  Text("22", style: RobotoPalette.fWhite_60_400),
-                  25.verticalSpace,
-                  Lottie.asset(AppJson.jsonThunder,
-                      repeat: true,
-                      reverse: false,
-                      height: 150.w,
-                      width: 150.w,
-                      animate: true, onLoaded: (composition) {
-                    debugPrint(composition.duration.toString());
-                  }, delegates: const LottieDelegates()),
-                  25.verticalSpace,
-                  Expanded(
-                    flex: 2,
-                    child: SizedBox(
-                      width: 250.w,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                25.horizontalSpace
+              ],
+            ),
+            backgroundColor: AppColors.black,
+            body: Container(
+              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+              width: double.maxFinite,
+              height: double.maxFinite,
+              child: BlocConsumer<MainBloc, MainState>(
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Column(
                             children: [
-                              Expanded(
-                                flex: 5,
-                                child: Text("Humidity (%)",
-                                    style: RobotoPalette.fWhite_18_400),
+                              Icon(
+                                Icons.location_pin,
+                                color: AppColors.white,
+                                size: 30.w,
                               ),
-                              Expanded(
-                                child: Text(" - ",
-                                    style: RobotoPalette.fWhite_18_400),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text("sa ",
-                                    style: RobotoPalette.fWhite_18_400),
-                              )
+                              Text("India", style: RobotoPalette.fWhite_24_400),
+                              Text("Date", style: RobotoPalette.fWhite_18_400),
                             ],
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                flex: 5,
-                                child: Text("Wind Speed (m/s)",
-                                    style: RobotoPalette.fWhite_18_400),
-                              ),
-                              Expanded(
-                                child: Text(" - ",
-                                    style: RobotoPalette.fWhite_18_400),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text("sas",
-                                    style: RobotoPalette.fWhite_18_400),
-                              )
-                            ],
+                        ),
+                        40.verticalSpace,
+                        Text("22", style: RobotoPalette.fWhite_60_400),
+                        25.verticalSpace,
+                        Lottie.asset(AppJson.jsonThunder,
+                            repeat: true,
+                            reverse: false,
+                            height: 150.w,
+                            width: 150.w,
+                            animate: true, onLoaded: (composition) {
+                          debugPrint(composition.duration.toString());
+                        }, delegates: const LottieDelegates()),
+                        25.verticalSpace,
+                        Expanded(
+                          flex: 2,
+                          child: SizedBox(
+                            width: 250.w,
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      flex: 5,
+                                      child: Text("Humidity (%)",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    ),
+                                    Expanded(
+                                      child: Text(" - ",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text("sa ",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      flex: 5,
+                                      child: Text("Wind Speed (m/s)",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    ),
+                                    Expanded(
+                                      child: Text(" - ",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Text("sas",
+                                          style: RobotoPalette.fWhite_18_400),
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              );
-            }),
-      ),
-    );
+                        )
+                      ],
+                    );
+                  }),
+            ),
+          );
+        });
   }
 }
