@@ -9,12 +9,6 @@ abstract class MainState extends Equatable {
 
 class MainInitial extends MainState {}
 
-// class MainPowerButtonState extends MainState {
-//   final bool value;
-//   const MainPowerButtonState({this.value = false});
-// }
-
 class FlashlightOffState extends MainState {}
 
 class FlashlightOnState extends MainState {}
-

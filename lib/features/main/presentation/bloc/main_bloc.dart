@@ -10,7 +10,5 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   }
 
   Future<void> _onPowerButtonEvent(
-      MainPowerButtonEvent event, Emitter<MainState> emit) async {
-   
-  }
+      MainPowerButtonEvent event, Emitter<MainState> emit) async {}
 }

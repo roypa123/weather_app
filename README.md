@@ -1,16 +1,11 @@
-# weather_app
+# Weather App
 
-A new Flutter project.
+A Weather App is a mobile application designed to provide users with accurate, real-time weather information. It offers a convenient way to stay updated on current weather conditions, helping users plan their daily activities accordingly.
 
-## Getting Started
+## Important Packeges used
 
-This project is a starting point for a Flutter application.
+### 1. Flutter Bloc
+### 2. Dio
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## App Screen Shot
