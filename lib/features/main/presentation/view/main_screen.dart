@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-
-import '../../../../core/configs/constants/app_json.dart';
 import '../../../../core/configs/constants/string_constants.dart';
 import '../../../../core/configs/styles/app_colors.dart';
 import '../../../../core/configs/styles/fonts/roboto.dart';
@@ -27,10 +23,7 @@ class MainScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     context.read<MainBloc>().add(
-                          const GetDataEvent(
-                            latitude: 10.0087996,
-                            longitude: 76.3241211,
-                          ),
+                          const GetCoordinatesEvent(),
                         );
                   },
                   child: Icon(
@@ -56,7 +49,8 @@ class MainScreen extends StatelessWidget {
                       children: [
                         Expanded(
                             flex: 1,
-                            child: state is MainSuccess && state.name != Strings.empty
+                            child: state is MainSuccess &&
+                                    state.name != Strings.empty
                                 ? Column(
                                     children: [
                                       Icon(
@@ -71,13 +65,14 @@ class MainScreen extends StatelessWidget {
                                 : const SizedBox()),
                         40.verticalSpace,
                         Text(
-                            state is MainSuccess && state.temperature != Strings.empty
+                            state is MainSuccess &&
+                                    state.temperature != Strings.empty
                                 ? "${state.temperature}${Strings.degreeCelsius}"
                                 : Strings.empty,
                             style: RobotoPalette.fWhite_60_400),
                         25.verticalSpace,
                         state is MainSuccess && state.condition != Strings.empty
-                            ? Lottie.asset(AppJson.jsonThunder,
+                            ? Lottie.asset(state.condition,
                                 repeat: true,
                                 reverse: false,
                                 height: 150.w,
@@ -93,7 +88,8 @@ class MainScreen extends StatelessWidget {
                             width: 250.w,
                             child: Column(
                               children: [
-                                state is MainSuccess && state.humidity != Strings.empty
+                                state is MainSuccess &&
+                                        state.humidity != Strings.empty
                                     ? Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
@@ -118,7 +114,8 @@ class MainScreen extends StatelessWidget {
                                         ],
                                       )
                                     : const SizedBox(),
-                                state is MainSuccess && state.windSpeed != Strings.empty
+                                state is MainSuccess &&
+                                        state.windSpeed != Strings.empty
                                     ? Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,

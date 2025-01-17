@@ -2,9 +2,9 @@ import 'dart:developer';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/features/main/repo/main_repo.dart';
 import '../../../../core/configs/constants/app_json.dart';
-import '../../model/weather_data_model.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -13,27 +13,52 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   MainBloc({required MainRepo mainRepo})
       : _mainRepo = mainRepo,
         super(MainInitial()) {
+    on<GetCoordinatesEvent>(_getCoordinatesEvent);
     on<GetDataEvent>(_getDataEvent);
   }
 
   final MainRepo _mainRepo;
-  double latitude = 0;
-  double longitude = 0;
+
   String name = "";
   double humidity = 0;
   double windspeed = 0;
   double temperature = 0;
   String condition = "";
-  WeatherDataModel? weatherDataModel;
+
+  Future<void> _getCoordinatesEvent(
+      GetCoordinatesEvent event, Emitter<MainState> emit) async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      emit(const ErrorState(errorMessage: 'Location services are disabled.'));
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        emit(const ErrorState(errorMessage: 'Location permissions are denied'));
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      emit(const ErrorState(
+          errorMessage: 'Location permissions are permanently denied'));
+    }
+
+    Position position = await Geolocator.getCurrentPosition();
+    double latitude = position.latitude;
+    double longitude = position.longitude;
+    add(GetDataEvent(latitude: latitude, longitude: longitude));
+  }
 
   Future<void> _getDataEvent(
       GetDataEvent event, Emitter<MainState> emit) async {
     log("dep1");
-    latitude = event.latitude;
-    longitude = event.longitude;
+
     await _mainRepo
         .getWeatherData(
-            latitude: latitude.toString(), longitude: longitude.toString())
+            latitude: event.latitude.toString(),
+            longitude: event.longitude.toString())
         .fold((left) {
       log("wrong");
     }, (right) {
@@ -48,7 +73,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           condition = AppJson.jsonCloudy;
           break;
         case "Haze":
-          condition = AppJson.jsonSunny;
+          condition = AppJson.jsonHaze;
           break;
         case "Sunny":
           condition = AppJson.jsonSunny;

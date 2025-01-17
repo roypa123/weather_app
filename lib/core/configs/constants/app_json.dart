@@ -8,4 +8,5 @@ class AppJson {
   static const String jsonSunny = '${basePath}sunny$format';
   static const String jsonThunderAndRainy = '${basePath}thunder_and_rainy$format';
   static const String jsonThunder = '${basePath}thunder$format';
+  static const String jsonHaze = '${basePath}haze$format';
 }
