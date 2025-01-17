@@ -26,6 +26,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   double windspeed = 0;
   double temperature = 0;
   String condition = "";
+  String main = "";
   String? errorMessage;
 
   Future<void> _getCoordinatesEvent(
@@ -73,6 +74,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       temperature = right.main.temp;
       final celsius = temperature - 273.15;
       condition = right.weather.first.icon;
+      main = right.weather.first.main;
 
       emit(
         SuccessState(
@@ -80,7 +82,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             humidity: humidity.toStringAsFixed(1),
             windSpeed: windspeed.toStringAsFixed(1),
             temperature: celsius.toStringAsFixed(1),
-            condition: condition),
+            condition: condition,
+            main: main
+            
+            ),
       );
     });
   }

@@ -15,15 +15,19 @@ class SuccessState extends MainState {
       this.humidity = "",
       this.windSpeed = "",
       this.temperature = "",
-      this.condition = ""});
+      this.condition = "",
+      this.main = ""
+      
+      });
   final String name;
   final String humidity;
   final String windSpeed;
   final String temperature;
   final String condition;
+  final String main;
 
   @override
-  List<Object> get props => [name, humidity, windSpeed, temperature, condition];
+  List<Object> get props => [name, humidity, windSpeed, temperature, condition, main];
 }
 
 class ErrorState extends MainState {

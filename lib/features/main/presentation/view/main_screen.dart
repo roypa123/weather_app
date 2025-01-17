@@ -19,12 +19,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   Isolate? _isolate;
   ReceivePort? _receivePort;
-  // @override
-  // void initState() {
-  //   _init();
-  //   _startIsolate();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    _init();
+    //_startIsolate();
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -53,14 +53,14 @@ class _MainScreenState extends State<MainScreen> {
                 },
                 child: Icon(
                   Icons.replay,
-                  color: AppColors.white,
+                  color: AppColors.black,
                   size: 30.w,
                 ),
               ),
               25.horizontalSpace
             ],
           ),
-          backgroundColor: AppColors.white,
+          backgroundColor: AppColors.backgroundColor,
           body: state is SuccessState
               ? Container(
                   padding:
@@ -78,11 +78,11 @@ class _MainScreenState extends State<MainScreen> {
                                   children: [
                                     Icon(
                                       Icons.location_pin,
-                                      color: AppColors.white,
+                                      color: AppColors.black,
                                       size: 25.w,
                                     ),
                                     Text(state.name,
-                                        style: RobotoPalette.fWhite_24_400),
+                                        style: RobotoPalette.fBlack_24_400),
                                   ],
                                 )
                               : const SizedBox()),
@@ -91,12 +91,25 @@ class _MainScreenState extends State<MainScreen> {
                           state.temperature != Strings.empty
                               ? "${state.temperature}${Strings.degreeCelsius}"
                               : Strings.empty,
-                          style: RobotoPalette.fWhite_60_400),
+                          style: RobotoPalette.fBlack_60_400),
                       25.verticalSpace,
                       state.condition != Strings.empty
-                          ? Image.network(
-                              "https://openweathermap.org/img/wn/10d@2x.png")
+                          ? SizedBox(
+                              height: 100.w,
+                              width: 100.w,
+                              child: Image.network(
+                                "https://openweathermap.org/img/wn/${state.condition}@2x.png",
+                                filterQuality: FilterQuality.high,
+                                fit: BoxFit.cover,
+                              ),
+                            )
                           : const SizedBox(),
+                      
+                      Text(
+                          state.main != Strings.empty
+                              ? state.main
+                              : Strings.empty,
+                          style: RobotoPalette.fBlack_26_400),
                       25.verticalSpace,
                       Expanded(
                         flex: 2,
@@ -113,18 +126,18 @@ class _MainScreenState extends State<MainScreen> {
                                           flex: 5,
                                           child: Text(Strings.humidity,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         ),
                                         Expanded(
                                           child: Text(Strings.symbol1,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         ),
                                         Expanded(
                                           flex: 2,
                                           child: Text(state.humidity,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         )
                                       ],
                                     )
@@ -138,18 +151,18 @@ class _MainScreenState extends State<MainScreen> {
                                           flex: 5,
                                           child: Text(Strings.windSpeed,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         ),
                                         Expanded(
                                           child: Text(Strings.symbol1,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         ),
                                         Expanded(
                                           flex: 2,
                                           child: Text(state.windSpeed,
                                               style:
-                                                  RobotoPalette.fWhite_18_400),
+                                                  RobotoPalette.fBlack_18_400),
                                         )
                                       ],
                                     )
@@ -163,18 +176,20 @@ class _MainScreenState extends State<MainScreen> {
                 )
               : const Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.blue,
+                    color: AppColors.black,
                   ),
                 ));
     });
   }
 
   _init() async {
-    afterInit(() {
-      context.read<MainBloc>().add(
+    // afterInit(() {
+      
+    // });
+
+    context.read<MainBloc>().add(
             const GetCoordinatesEvent(),
           );
-    });
   }
 
   Future<void> _startIsolate() async {
