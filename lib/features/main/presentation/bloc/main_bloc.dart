@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/features/main/repo/main_repo.dart';
 import '../../../../core/configs/constants/app_json.dart';
+import '../../../../core/configs/constants/string_constants.dart';
+import '../../../../core/utils/helpers/common_functions.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -29,20 +31,23 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       GetCoordinatesEvent event, Emitter<MainState> emit) async {
     bool serviceEnabled;
     LocationPermission permission;
+    if (!(await isInternetAvailable())) {
+      emit(const ErrorState(errorMessage: Strings.noInternet));
+    }
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      emit(const ErrorState(errorMessage: 'Location services are disabled.'));
+      emit(const ErrorState(errorMessage: Strings.locationServicesAreDisabled));
     }
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        emit(const ErrorState(errorMessage: 'Location permissions are denied'));
+        emit(const ErrorState(errorMessage: Strings.locationPermissionAreDenied));
       }
     }
     if (permission == LocationPermission.deniedForever) {
       emit(const ErrorState(
-          errorMessage: 'Location permissions are permanently denied'));
+          errorMessage: Strings.locationPermanentlyDenied));
     }
 
     Position position = await Geolocator.getCurrentPosition();
@@ -60,9 +65,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             latitude: event.latitude.toString(),
             longitude: event.longitude.toString())
         .fold((left) {
-      log("wrong");
+      emit(const ErrorState(
+          errorMessage: 'Location permissions are permanently denied'));
     }, (right) {
-      log("right");
       name = right.name;
       humidity = right.main.humidity.toDouble();
       windspeed = right.wind.speed;

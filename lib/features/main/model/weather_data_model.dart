@@ -8,10 +8,9 @@ class WeatherDataModel {
   Main main;
   Wind wind;
   Clouds clouds;
-  int dt;
+
   Sys sys;
-  int timezone;
-  int id;
+
   String name;
   int cod;
 
@@ -20,24 +19,19 @@ class WeatherDataModel {
     required this.main,
     required this.wind,
     required this.clouds,
-    required this.dt,
     required this.sys,
-    required this.timezone,
-    required this.id,
     required this.name,
     required this.cod,
   });
 
-  factory WeatherDataModel.fromJson(Map<String, dynamic> json) => WeatherDataModel(
+  factory WeatherDataModel.fromJson(Map<String, dynamic> json) =>
+      WeatherDataModel(
         weather:
             List<Weather>.from(json["weather"].map((x) => Weather.fromJson(x))),
         main: Main.fromJson(json["main"]),
         wind: Wind.fromJson(json["wind"]),
         clouds: Clouds.fromJson(json["clouds"]),
-        dt: json["dt"],
         sys: Sys.fromJson(json["sys"]),
-        timezone: json["timezone"],
-        id: json["id"],
         name: json["name"],
         cod: json["cod"],
       );
@@ -74,26 +68,14 @@ class Main {
 }
 
 class Sys {
-  int type;
-  int id;
   String country;
-  int sunrise;
-  int sunset;
 
   Sys({
-    required this.type,
-    required this.id,
     required this.country,
-    required this.sunrise,
-    required this.sunset,
   });
 
   factory Sys.fromJson(Map<String, dynamic> json) => Sys(
-        type: json["type"],
-        id: json["id"],
         country: json["country"],
-        sunrise: json["sunrise"],
-        sunset: json["sunset"],
       );
 }
 

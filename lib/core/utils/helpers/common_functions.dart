@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -15,6 +16,12 @@ Future<bool> isInternetAvailable() async {
     return false;
   }
   return false;
+}
+
+void afterInit(Function function) {
+  SchedulerBinding.instance.addPostFrameCallback((_) {
+    function.call();
+  });
 }
 
 void showToast({String? msg, bool? isError = true}) {
