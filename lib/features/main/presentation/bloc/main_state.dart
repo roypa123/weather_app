@@ -7,10 +7,10 @@ abstract class MainState extends Equatable {
   List<Object> get props => [];
 }
 
-class MainInitial extends MainState {}
+class InitialState extends MainState {}
 
-class MainSuccess extends MainState {
-  const MainSuccess(
+class SuccessState extends MainState {
+  const SuccessState(
       {this.name = "",
       this.humidity = "",
       this.windSpeed = "",

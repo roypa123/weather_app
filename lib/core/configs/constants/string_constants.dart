@@ -7,6 +7,7 @@ class Strings {
   static const String symbol1 = " - ";
 
   static const String noInternet = "No Internet";
+  static const String somethingWentWrong = "Something went wrong";
   static const String locationServicesAreDisabled = "Location services are disabled.";
   static const String locationPermissionAreDenied = 'Location permissions are denied';
 

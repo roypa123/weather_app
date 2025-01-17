@@ -16,11 +16,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // @override
-  // void initState() {
-  //   _init();
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    _init();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,139 +30,145 @@ class _MainScreenState extends State<MainScreen> {
       }
     }, builder: (context, state) {
       return Scaffold(
-        appBar: AppBar(
-          leading: const SizedBox(),
-          backgroundColor: AppColors.transparent,
-          actions: [
-            GestureDetector(
-              onTap: () {
-                context.read<MainBloc>().add(
-                      const GetCoordinatesEvent(),
-                    );
-              },
-              child: Icon(
-                Icons.replay,
-                color: AppColors.white,
-                size: 30.w,
+          appBar: AppBar(
+            leading: const SizedBox(),
+            backgroundColor: AppColors.transparent,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  context.read<MainBloc>().add(
+                        const GetCoordinatesEvent(),
+                      );
+                },
+                child: Icon(
+                  Icons.replay,
+                  color: AppColors.white,
+                  size: 30.w,
+                ),
               ),
-            ),
-            25.horizontalSpace
-          ],
-        ),
-        backgroundColor: AppColors.black,
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
-          width: double.maxFinite,
-          height: double.maxFinite,
-          child: BlocConsumer<MainBloc, MainState>(
-              listener: (context, state) {},
-              builder: (context, state) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child:
-                            state is MainSuccess && state.name != Strings.empty
-                                ? Column(
-                                    children: [
-                                      Icon(
-                                        Icons.location_pin,
-                                        color: AppColors.white,
-                                        size: 25.w,
-                                      ),
-                                      Text(state.name,
-                                          style: RobotoPalette.fWhite_24_400),
-                                    ],
-                                  )
-                                : const SizedBox()),
-                    40.verticalSpace,
-                    Text(
-                        state is MainSuccess &&
-                                state.temperature != Strings.empty
-                            ? "${state.temperature}${Strings.degreeCelsius}"
-                            : Strings.empty,
-                        style: RobotoPalette.fWhite_60_400),
-                    25.verticalSpace,
-                    state is MainSuccess && state.condition != Strings.empty
-                        ? Lottie.asset(state.condition,
-                            repeat: true,
-                            reverse: false,
-                            height: 150.w,
-                            width: 150.w,
-                            animate: true, onLoaded: (composition) {
-                            debugPrint(composition.duration.toString());
-                          }, delegates: const LottieDelegates())
-                        : const SizedBox(),
-                    25.verticalSpace,
-                    Expanded(
-                      flex: 2,
-                      child: SizedBox(
-                        width: 250.w,
-                        child: Column(
-                          children: [
-                            state is MainSuccess &&
-                                    state.humidity != Strings.empty
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: Text(Strings.humidity,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      ),
-                                      Expanded(
-                                        child: Text(Strings.symbol1,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(state.humidity,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      )
-                                    ],
-                                  )
-                                : const SizedBox(),
-                            state is MainSuccess &&
-                                    state.windSpeed != Strings.empty
-                                ? Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 5,
-                                        child: Text(Strings.windSpeed,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      ),
-                                      Expanded(
-                                        child: Text(Strings.symbol1,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Text(state.windSpeed,
-                                            style: RobotoPalette.fWhite_18_400),
-                                      )
-                                    ],
-                                  )
-                                : const SizedBox()
-                          ],
+              25.horizontalSpace
+            ],
+          ),
+          backgroundColor: AppColors.black,
+          body: state is SuccessState
+              ? Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
+                  width: double.maxFinite,
+                  height: double.maxFinite,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: state.name != Strings.empty
+                              ? Column(
+                                  children: [
+                                    Icon(
+                                      Icons.location_pin,
+                                      color: AppColors.white,
+                                      size: 25.w,
+                                    ),
+                                    Text(state.name,
+                                        style: RobotoPalette.fWhite_24_400),
+                                  ],
+                                )
+                              : const SizedBox()),
+                      40.verticalSpace,
+                      Text(
+                          state.temperature != Strings.empty
+                              ? "${state.temperature}${Strings.degreeCelsius}"
+                              : Strings.empty,
+                          style: RobotoPalette.fWhite_60_400),
+                      25.verticalSpace,
+                      state.condition != Strings.empty
+                          ? Lottie.asset(state.condition,
+                              repeat: true,
+                              reverse: false,
+                              height: 150.w,
+                              width: 150.w,
+                              animate: true, onLoaded: (composition) {
+                              debugPrint(composition.duration.toString());
+                            }, delegates: const LottieDelegates())
+                          : const SizedBox(),
+                      25.verticalSpace,
+                      Expanded(
+                        flex: 2,
+                        child: SizedBox(
+                          width: 250.w,
+                          child: Column(
+                            children: [
+                              state.humidity != Strings.empty
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Text(Strings.humidity,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        ),
+                                        Expanded(
+                                          child: Text(Strings.symbol1,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(state.humidity,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        )
+                                      ],
+                                    )
+                                  : const SizedBox(),
+                              state.windSpeed != Strings.empty
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          flex: 5,
+                                          child: Text(Strings.windSpeed,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        ),
+                                        Expanded(
+                                          child: Text(Strings.symbol1,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        ),
+                                        Expanded(
+                                          flex: 2,
+                                          child: Text(state.windSpeed,
+                                              style:
+                                                  RobotoPalette.fWhite_18_400),
+                                        )
+                                      ],
+                                    )
+                                  : const SizedBox()
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                );
-              }),
-        ),
-      );
+                      )
+                    ],
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.blue,
+                  ),
+                ));
     });
   }
 
-  _init() async{
-    // afterInit(() {
-    // });
-     context.read<MainBloc>().add(
+  _init() async {
+    afterInit(() {
+      context.read<MainBloc>().add(
             const GetCoordinatesEvent(),
           );
+    });
   }
 }

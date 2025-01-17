@@ -14,7 +14,7 @@ part 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   MainBloc({required MainRepo mainRepo})
       : _mainRepo = mainRepo,
-        super(MainInitial()) {
+        super(InitialState()) {
     on<GetCoordinatesEvent>(_getCoordinatesEvent);
     on<GetDataEvent>(_getDataEvent);
   }
@@ -26,6 +26,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   double windspeed = 0;
   double temperature = 0;
   String condition = "";
+  String? errorMessage;
 
   Future<void> _getCoordinatesEvent(
       GetCoordinatesEvent event, Emitter<MainState> emit) async {
@@ -42,12 +43,12 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        emit(const ErrorState(errorMessage: Strings.locationPermissionAreDenied));
+        emit(const ErrorState(
+            errorMessage: Strings.locationPermissionAreDenied));
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      emit(const ErrorState(
-          errorMessage: Strings.locationPermanentlyDenied));
+      emit(const ErrorState(errorMessage: Strings.locationPermanentlyDenied));
     }
 
     Position position = await Geolocator.getCurrentPosition();
@@ -58,15 +59,13 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   Future<void> _getDataEvent(
       GetDataEvent event, Emitter<MainState> emit) async {
-    log("dep1");
-
     await _mainRepo
         .getWeatherData(
             latitude: event.latitude.toString(),
             longitude: event.longitude.toString())
         .fold((left) {
-      emit(const ErrorState(
-          errorMessage: 'Location permissions are permanently denied'));
+      errorMessage = left.response?['message'] ?? Strings.somethingWentWrong;
+      emit(ErrorState(errorMessage: errorMessage!));
     }, (right) {
       name = right.name;
       humidity = right.main.humidity.toDouble();
@@ -92,7 +91,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       }
 
       emit(
-        MainSuccess(
+        SuccessState(
             name: name,
             humidity: humidity.toStringAsFixed(1),
             windSpeed: windspeed.toStringAsFixed(1),
