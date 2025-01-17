@@ -7,6 +7,7 @@ A Weather App is a mobile application designed to provide users with accurate, r
 ### 1. Flutter Bloc
 ### 2. Dio
 ### 3. GetIt
+### 4. geolocator
 
 
 ## App Screen Shot

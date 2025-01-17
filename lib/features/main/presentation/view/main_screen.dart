@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,20 +16,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  Isolate? _isolate;
-  ReceivePort? _receivePort;
   @override
   void initState() {
     _init();
-    //_startIsolate();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _isolate?.kill(priority: Isolate.immediate);
-    _receivePort?.close();
-    super.dispose();
   }
 
   @override
@@ -104,7 +93,6 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             )
                           : const SizedBox(),
-                      
                       Text(
                           state.main != Strings.empty
                               ? state.main
@@ -182,30 +170,9 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
-  _init() async {
-    // afterInit(() {
-      
-    // });
-
+  Future<void> _init() async {
     context.read<MainBloc>().add(
-            const GetCoordinatesEvent(),
-          );
-  }
-
-  Future<void> _startIsolate() async {
-    _receivePort = ReceivePort();
-    _isolate = await Isolate.spawn(_isolateEntry, _receivePort!.sendPort);
-
-    _receivePort?.listen((message) {
-      if (message == 'tick') {
-        context.read<MainBloc>().add(const GetCoordinatesEvent());
-      }
-    });
-  }
-
-  static void _isolateEntry(SendPort sendPort) {
-    Timer.periodic(const Duration(minutes: 10), (timer) {
-      sendPort.send('tick');
-    });
+          const GetCoordinatesEvent(),
+        );
   }
 }

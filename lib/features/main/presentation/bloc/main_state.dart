@@ -30,6 +30,15 @@ class SuccessState extends MainState {
   List<Object> get props => [name, humidity, windSpeed, temperature, condition, main];
 }
 
+class LoadingState extends MainState {
+  const LoadingState();
+  
+
+  @override
+  List<Object> get props => [];
+}
+
+
 class ErrorState extends MainState {
   const ErrorState({
     this.errorMessage = "",

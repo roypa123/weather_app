@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:either_dart/either.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,6 +59,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   Future<void> _getDataEvent(
       GetDataEvent event, Emitter<MainState> emit) async {
+    emit(const LoadingState());
+    await Future.delayed(const Duration(seconds: 2));
     await _mainRepo
         .getWeatherData(
             latitude: event.latitude.toString(),
@@ -83,9 +84,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             windSpeed: windspeed.toStringAsFixed(1),
             temperature: celsius.toStringAsFixed(1),
             condition: condition,
-            main: main
-            
-            ),
+            main: main),
       );
     });
   }
