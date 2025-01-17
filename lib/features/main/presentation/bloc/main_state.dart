@@ -10,12 +10,18 @@ abstract class MainState extends Equatable {
 class MainInitial extends MainState {}
 
 class MainSuccess extends MainState {
-  const MainSuccess({this.name = "", this.humidity = "", this.windSpeed = "",this.temperature = ""});
+  const MainSuccess(
+      {this.name = "",
+      this.humidity = "",
+      this.windSpeed = "",
+      this.temperature = "",
+      this.condition = ""});
   final String name;
   final String humidity;
   final String windSpeed;
   final String temperature;
+  final String condition;
 
   @override
-  List<Object> get props => [name, humidity, windSpeed,temperature];
+  List<Object> get props => [name, humidity, windSpeed, temperature, condition];
 }

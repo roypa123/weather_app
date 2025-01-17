@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../../core/configs/constants/app_json.dart';
+import '../../../../core/configs/constants/string_constants.dart';
 import '../../../../core/configs/styles/app_colors.dart';
 import '../../../../core/configs/styles/fonts/roboto.dart';
 import '../bloc/main_bloc.dart';
@@ -25,7 +26,6 @@ class MainScreen extends StatelessWidget {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    log("hello");
                     context.read<MainBloc>().add(
                           const GetDataEvent(
                             latitude: 10.0087996,
@@ -56,13 +56,13 @@ class MainScreen extends StatelessWidget {
                       children: [
                         Expanded(
                             flex: 1,
-                            child: state is MainSuccess && state.name != ""
+                            child: state is MainSuccess && state.name != Strings.empty
                                 ? Column(
                                     children: [
                                       Icon(
                                         Icons.location_pin,
                                         color: AppColors.white,
-                                        size: 30.w,
+                                        size: 25.w,
                                       ),
                                       Text(state.name,
                                           style: RobotoPalette.fWhite_24_400),
@@ -71,19 +71,21 @@ class MainScreen extends StatelessWidget {
                                 : const SizedBox()),
                         40.verticalSpace,
                         Text(
-                            state is MainSuccess && state.temperature != ""
-                                ? state.temperature
-                                : "",
+                            state is MainSuccess && state.temperature != Strings.empty
+                                ? "${state.temperature}${Strings.degreeCelsius}"
+                                : Strings.empty,
                             style: RobotoPalette.fWhite_60_400),
                         25.verticalSpace,
-                        Lottie.asset(AppJson.jsonThunder,
-                            repeat: true,
-                            reverse: false,
-                            height: 150.w,
-                            width: 150.w,
-                            animate: true, onLoaded: (composition) {
-                          debugPrint(composition.duration.toString());
-                        }, delegates: const LottieDelegates()),
+                        state is MainSuccess && state.condition != Strings.empty
+                            ? Lottie.asset(AppJson.jsonThunder,
+                                repeat: true,
+                                reverse: false,
+                                height: 150.w,
+                                width: 150.w,
+                                animate: true, onLoaded: (composition) {
+                                debugPrint(composition.duration.toString());
+                              }, delegates: const LottieDelegates())
+                            : const SizedBox(),
                         25.verticalSpace,
                         Expanded(
                           flex: 2,
@@ -91,19 +93,19 @@ class MainScreen extends StatelessWidget {
                             width: 250.w,
                             child: Column(
                               children: [
-                                state is MainSuccess && state.humidity != ""
+                                state is MainSuccess && state.humidity != Strings.empty
                                     ? Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Expanded(
                                             flex: 5,
-                                            child: Text("Humidity (%)",
+                                            child: Text(Strings.humidity,
                                                 style: RobotoPalette
                                                     .fWhite_18_400),
                                           ),
                                           Expanded(
-                                            child: Text(" - ",
+                                            child: Text(Strings.symbol1,
                                                 style: RobotoPalette
                                                     .fWhite_18_400),
                                           ),
@@ -116,19 +118,19 @@ class MainScreen extends StatelessWidget {
                                         ],
                                       )
                                     : const SizedBox(),
-                                state is MainSuccess && state.windSpeed != ""
+                                state is MainSuccess && state.windSpeed != Strings.empty
                                     ? Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
                                           Expanded(
                                             flex: 5,
-                                            child: Text("Wind Speed (m/s)",
+                                            child: Text(Strings.windSpeed,
                                                 style: RobotoPalette
                                                     .fWhite_18_400),
                                           ),
                                           Expanded(
-                                            child: Text(" - ",
+                                            child: Text(Strings.symbol1,
                                                 style: RobotoPalette
                                                     .fWhite_18_400),
                                           ),
