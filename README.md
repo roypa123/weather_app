@@ -2,12 +2,12 @@
 
 A Weather App is a mobile application designed to provide users with accurate, real-time weather information. It offers a convenient way to stay updated on current weather conditions, helping users plan their daily activities accordingly.
 
-## Important Packeges used
+### Important Packeges used
 
-### 1. Flutter Bloc
-### 2. Dio
-### 3. GetIt
-### 4. geolocator
+ 1. Flutter Bloc
+ 2. Dio
+ 3. GetIt
+ 4. geolocator
 
 
-## App Screen Shot
+### App Screen Shot
