@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/features/main/repo/main_repo.dart';
-import '../../../../core/configs/constants/app_json.dart';
+
 import '../../../../core/configs/constants/string_constants.dart';
 import '../../../../core/utils/helpers/common_functions.dart';
 
@@ -72,23 +72,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       windspeed = right.wind.speed;
       temperature = right.main.temp;
       final celsius = temperature - 273.15;
-      switch (right.weather.first.main) {
-        case "Clouds":
-          condition = AppJson.jsonCloudy;
-          break;
-        case "Haze":
-          condition = AppJson.jsonHaze;
-          break;
-        case "Sunny":
-          condition = AppJson.jsonSunny;
-          break;
-        case "Thunder":
-          condition = AppJson.jsonThunder;
-          break;
-
-        default:
-          condition = "";
-      }
+      condition = right.weather.first.icon;
 
       emit(
         SuccessState(

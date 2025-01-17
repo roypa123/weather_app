@@ -1,7 +1,8 @@
+import 'dart:async';
+import 'dart:isolate';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lottie/lottie.dart';
 import '../../../../core/configs/constants/string_constants.dart';
 import '../../../../core/configs/styles/app_colors.dart';
 import '../../../../core/configs/styles/fonts/roboto.dart';
@@ -16,10 +17,20 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  Isolate? _isolate;
+  ReceivePort? _receivePort;
+  // @override
+  // void initState() {
+  //   _init();
+  //   _startIsolate();
+  //   super.initState();
+  // }
+
   @override
-  void initState() {
-    _init();
-    super.initState();
+  void dispose() {
+    _isolate?.kill(priority: Isolate.immediate);
+    _receivePort?.close();
+    super.dispose();
   }
 
   @override
@@ -49,7 +60,7 @@ class _MainScreenState extends State<MainScreen> {
               25.horizontalSpace
             ],
           ),
-          backgroundColor: AppColors.black,
+          backgroundColor: AppColors.white,
           body: state is SuccessState
               ? Container(
                   padding:
@@ -83,14 +94,8 @@ class _MainScreenState extends State<MainScreen> {
                           style: RobotoPalette.fWhite_60_400),
                       25.verticalSpace,
                       state.condition != Strings.empty
-                          ? Lottie.asset(state.condition,
-                              repeat: true,
-                              reverse: false,
-                              height: 150.w,
-                              width: 150.w,
-                              animate: true, onLoaded: (composition) {
-                              debugPrint(composition.duration.toString());
-                            }, delegates: const LottieDelegates())
+                          ? Image.network(
+                              "https://openweathermap.org/img/wn/10d@2x.png")
                           : const SizedBox(),
                       25.verticalSpace,
                       Expanded(
@@ -169,6 +174,23 @@ class _MainScreenState extends State<MainScreen> {
       context.read<MainBloc>().add(
             const GetCoordinatesEvent(),
           );
+    });
+  }
+
+  Future<void> _startIsolate() async {
+    _receivePort = ReceivePort();
+    _isolate = await Isolate.spawn(_isolateEntry, _receivePort!.sendPort);
+
+    _receivePort?.listen((message) {
+      if (message == 'tick') {
+        context.read<MainBloc>().add(const GetCoordinatesEvent());
+      }
+    });
+  }
+
+  static void _isolateEntry(SendPort sendPort) {
+    Timer.periodic(const Duration(minutes: 10), (timer) {
+      sendPort.send('tick');
     });
   }
 }
